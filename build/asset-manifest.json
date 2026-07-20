@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Zenu/static/css/main.a9d92408.css",
+    "main.js": "/Zenu/static/js/main.6f11de74.js",
+    "index.html": "/Zenu/index.html",
+    "main.a9d92408.css.map": "/Zenu/static/css/main.a9d92408.css.map",
+    "main.6f11de74.js.map": "/Zenu/static/js/main.6f11de74.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a9d92408.css",
+    "static/js/main.6f11de74.js"
+  ]
+}
