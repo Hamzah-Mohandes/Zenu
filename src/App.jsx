@@ -803,7 +803,7 @@ Email: hamzahmohandesz@gmail.com
         try {
           setOutput(prev => [...prev, {
             type: 'output',
-            text: `💼 Opening email client...\n📧 Sending to: hamzahmohandesz@gmail.98\n\n✨ Let's connect and build something amazing!`
+            text: `💼 Opening email client...\n📧 Sending to: hamzahmohandesz@gmail.com\n\n✨ Let's connect and build something amazing!`
           }]);
           animateNewOutput();
           
