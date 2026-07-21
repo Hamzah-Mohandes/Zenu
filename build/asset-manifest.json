@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Zenu/static/css/main.a9d92408.css",
-    "main.js": "/Zenu/static/js/main.6f11de74.js",
+    "main.css": "/Zenu/static/css/main.1efd2752.css",
+    "main.js": "/Zenu/static/js/main.43520cae.js",
     "index.html": "/Zenu/index.html",
-    "main.a9d92408.css.map": "/Zenu/static/css/main.a9d92408.css.map",
-    "main.6f11de74.js.map": "/Zenu/static/js/main.6f11de74.js.map"
+    "main.1efd2752.css.map": "/Zenu/static/css/main.1efd2752.css.map",
+    "main.43520cae.js.map": "/Zenu/static/js/main.43520cae.js.map"
   },
   "entrypoints": [
-    "static/css/main.a9d92408.css",
-    "static/js/main.6f11de74.js"
+    "static/css/main.1efd2752.css",
+    "static/js/main.43520cae.js"
   ]
 }

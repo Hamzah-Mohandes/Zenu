@@ -1,723 +1,936 @@
+/* ============================================
+   RESET & BASE - با حس هنری
+   ============================================ */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: #000;
-  font-family: 'Fira Code', monospace;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  overflow: hidden;
+    background: radial-gradient(ellipse at center, #0a0e1a 0%, #05080f 100%);
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
 }
 
+/* ============================================
+   TERMINAL CONTAINER - با افکت شناور
+   ============================================ */
 .terminal-container {
-  width: 900px;
-  height: 600px;
-  position: relative;
-  z-index: 10;
+    width: 1100px;
+    height: 750px;
+    max-width: 96vw;
+    max-height: 92vh;
+    position: relative;
+    z-index: 10;
+    animation: terminalFloat 8s ease-in-out infinite;
 }
 
-.matrix-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  opacity: 0.15;
+@keyframes terminalFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
 }
 
-.crt-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
-  z-index: 5;
-  pointer-events: none;
-}
-
-.scanlines {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.15),
-    rgba(0, 0, 0, 0.15) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  z-index: 6;
-  pointer-events: none;
-}
-
-.hire-button {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  padding: 15px 30px;
-  background: linear-gradient(135deg, #50FA7B, #56B6C2);
-  color: #121212;
-  border: none;
-  border-radius: 50px;
-  font-family: 'Fira Code', monospace;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  z-index: 100;
-  box-shadow: 0 4px 20px rgba(80, 250, 123, 0.4);
-  transition: all 0.3s ease;
-  animation: pulse-button 2s ease-in-out infinite;
-}
-
-.hire-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 30px rgba(80, 250, 123, 0.6);
-}
-
-@keyframes pulse-button {
-  0%, 100% {
-    box-shadow: 0 4px 20px rgba(80, 250, 123, 0.4);
-  }
-  50% {
-    box-shadow: 0 4px 30px rgba(80, 250, 123, 0.7);
-  }
-}
-
+/* ============================================
+   TERMINAL WINDOW - با درخشش
+   ============================================ */
 .terminal-window {
-  background-color: #1E1E1E;
-  border-radius: 8px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 100px rgba(80, 250, 123, 0.1);
-  overflow: hidden;
-  border: 1px solid #333;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  z-index: 10;
+    background: linear-gradient(145deg, #141a24, #0d1117);
+    border-radius: 16px;
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 60px rgba(51, 255, 51, 0.03),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+    border: 1px solid rgba(51, 255, 51, 0.08);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
+/* حاشیه درخشان اطراف */
+.terminal-window::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(51, 255, 51, 0.1), transparent 40%, transparent 60%, rgba(51, 255, 51, 0.05));
+    z-index: -1;
+    animation: borderGlow 6s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* ============================================
+   HEADER - با طراحی مینیمال هنری
+   ============================================ */
 .terminal-header {
-  background-color: #2D2D2D;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #333;
+    background: linear-gradient(180deg, rgba(20, 26, 36, 0.95), rgba(13, 17, 23, 0.95));
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(51, 255, 51, 0.05);
+    flex-shrink: 0;
+    min-height: 44px;
+    backdrop-filter: blur(10px);
 }
 
 .terminal-buttons {
-  display: flex;
-  gap: 8px;
+    display: flex;
+    gap: 10px;
 }
 
 .terminal-button {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-.terminal-button.close {
-  background-color: #FF5F56;
+.terminal-button.close { 
+    background: #ff5f56;
+    box-shadow: 0 0 20px rgba(255, 95, 86, 0.2);
+}
+.terminal-button.minimize { 
+    background: #ffbd2e;
+    box-shadow: 0 0 20px rgba(255, 189, 46, 0.2);
+}
+.terminal-button.maximize { 
+    background: #27ca40;
+    box-shadow: 0 0 20px rgba(39, 202, 64, 0.2);
 }
 
-.terminal-button.minimize {
-  background-color: #FFBD2E;
-}
-
-.terminal-button.maximize {
-  background-color: #27CA40;
+.terminal-button:hover {
+    transform: scale(1.2);
 }
 
 .terminal-title {
-  margin-left: 16px;
-  color: #ABB2BF;
-  font-size: 14px;
-  font-weight: 500;
+    margin-left: 20px;
+    color: rgba(136, 146, 176, 0.6);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    flex: 1;
+    text-align: center;
+    margin-right: 70px;
+    font-family: 'JetBrains Mono', monospace;
 }
 
-.terminal-body {
-  padding: 0;
-  height: calc(100% - 48px);
-  display: flex;
-  flex-direction: column;
-  color: #ABB2BF;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.boot-output {
-  padding: 20px;
-  flex: 1;
-  overflow-y: auto;
-}
-
-.terminal-header-static {
-  padding: 20px;
-  border-bottom: 1px solid #333;
-  background-color: #1E1E1E;
-  flex-shrink: 0;
-}
-
-.header-text {
-  color: #50FA7B;
-  font-size: 13px;
-  white-space: pre;
-}
-
-.terminal-output-scroll {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-  min-height: 0;
-}
-
-.input-line {
-  display: flex;
-  align-items: center;
-  padding: 15px 20px;
-  border-top: 1px solid #333;
-  background-color: #1E1E1E;
-  flex-shrink: 0;
-}
-
-.terminal-line {
-  margin-bottom: 4px;
-}
-
-.boot-text {
-  color: #50FA7B;
-  font-size: 13px;
-}
-
-.system-text {
-  color: #56B6C2;
-  font-weight: 500;
-}
-
-.input-text {
-  color: #50FA7B;
-}
-
-.output-text {
-  color: #ABB2BF;
-  white-space: pre-wrap;
-  margin: 8px 0;
-}
-
-.error-text {
-  color: #FF5F56;
-}
-
-.neofetch-text {
-  color: #50FA7B;
-  font-size: 12px;
-  line-height: 1.3;
-  white-space: pre;
-}
-
-.clickable-text {
-  color: #56B6C2;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-block;
-}
-
-.clickable-text:hover {
-  color: #50FA7B;
-  text-decoration: underline;
-  transform: translateX(2px);
-}
-
-.input-line {
-  display: flex;
-  align-items: center;
-  margin-top: 8px;
-}
-
-.command-input {
-  background: transparent;
-  border: none;
-  color: #ABB2BF;
-  font-family: 'Fira Code', monospace;
-  font-size: 14px;
-  flex: 1;
-  margin-left: 8px;
-  outline: none;
-  caret-color: #50FA7B;
-}
-
-.cursor {
-  display: inline-block;
-  color: #50FA7B;
-  animation: blink 1s step-end infinite;
-  margin-left: 2px;
-}
-
-@keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
-.terminal-content {
-  animation: fadeIn 0.8s ease-in;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.welcome-section {
-  margin-bottom: 32px;
-}
-
-.greeting {
-  color: #50FA7B;
-  font-size: 16px;
-  margin-bottom: 16px;
-  font-weight: 600;
-}
-
-.prompt {
-  color: #50FA7B;
-  margin-right: 8px;
-}
-
-.developer-name {
-  font-size: 24px;
-  color: #50FA7B;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-
-.accent {
-  color: #56B6C2;
-  margin-right: 8px;
-}
-
-.developer-title {
-  font-size: 16px;
-  color: #ABB2BF;
-  margin-left: 24px;
-}
-
-.developer-info {
-  margin-left: 24px;
-}
-
-.developer-location {
-  font-size: 14px;
-  color: #ABB2BF;
-  margin-top: 8px;
-  margin-left: 24px;
-}
-
-.icon {
-  margin-right: 8px;
-}
-
-.developer-status {
-  font-size: 14px;
-  color: #50FA7B;
-  margin-top: 8px;
-  margin-left: 24px;
-  display: flex;
-  align-items: center;
+.terminal-title .highlight {
+    color: #33ff33;
+    font-weight: 600;
+    text-shadow: 0 0 20px rgba(51, 255, 51, 0.2);
 }
 
 .status-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background-color: #50FA7B;
-  border-radius: 50%;
-  margin-right: 8px;
-  animation: pulse 2s ease-in-out infinite;
+    width: 8px;
+    height: 8px;
+    background: #33ff33;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+    box-shadow: 0 0 20px rgba(51, 255, 51, 0.4);
+    animation: dotPulse 2s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.2);
-  }
+@keyframes dotPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(51, 255, 51, 0.4); }
+    50% { box-shadow: 0 0 40px rgba(51, 255, 51, 0.8), 0 0 60px rgba(51, 255, 51, 0.2); }
 }
 
-.section {
-  margin-bottom: 32px;
-}
-
-.section-title {
-  color: #50FA7B;
-  font-size: 16px;
-  margin-bottom: 16px;
-  font-weight: 600;
-}
-
-.tech-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  margin-left: 24px;
-}
-
-.tech-item {
-  color: #ABB2BF;
-  padding: 12px 16px;
-  background-color: #252525;
-  border-radius: 8px;
-  border: 1px solid #333;
-  transition: all 0.3s ease;
-}
-
-.tech-item:hover {
-  background-color: #2D2D2D;
-  border-color: #50FA7B;
-  transform: translateX(4px);
-}
-
-.tech-item.special {
-  border-color: #FF6B35;
-  background: linear-gradient(135deg, #252525 0%, #2D2D2D 100%);
-}
-
-.tech-item.special .tech-name {
-  color: #FF6B35;
-  font-weight: 600;
-}
-
-.tech-item.special .tech-bullet {
-  color: #FF6B35;
-}
-
-.tech-item.special .tech-progress {
-  background: linear-gradient(90deg, #FF6B35, #FF8C42);
-}
-
-.tech-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.tech-bullet {
-  color: #50FA7B;
-  margin-right: 8px;
-}
-
-.tech-name {
-  flex: 1;
-  font-weight: 500;
-}
-
-.tech-bar {
-  width: 100%;
-  height: 6px;
-  background-color: #333;
-  border-radius: 3px;
-  overflow: hidden;
-  margin-top: 8px;
-}
-
-.tech-progress {
-  height: 100%;
-  background: linear-gradient(90deg, #50FA7B, #56B6C2);
-  border-radius: 3px;
-  transition: width 1s ease-in-out;
-  animation: progressAnimation 1.5s ease-out;
-}
-
-@keyframes progressAnimation {
-  from {
-    width: 0;
-  }
-}
-
-.experience-list {
-  margin-left: 24px;
-}
-
-.experience-item {
-  padding: 16px;
-  background-color: #252525;
-  border-radius: 8px;
-  border: 1px solid #333;
-  margin-bottom: 12px;
-  transition: all 0.3s ease;
-}
-
-.experience-item:hover {
-  border-color: #50FA7B;
-  transform: translateX(4px);
-}
-
-.exp-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.exp-role {
-  color: #50FA7B;
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.exp-period {
-  color: #56B6C2;
-  font-size: 13px;
-}
-
-.exp-company {
-  color: #ABB2BF;
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.exp-description {
-  color: #787C85;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.projects-list {
-  margin-left: 24px;
-}
-
-.project-item {
-  padding: 16px;
-  background-color: #252525;
-  border-radius: 8px;
-  border: 1px solid #333;
-  margin-bottom: 12px;
-  transition: all 0.3s ease;
-}
-
-.project-item:hover {
-  border-color: #50FA7B;
-  transform: translateX(4px);
-}
-
-.project-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.project-name {
-  color: #50FA7B;
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.project-status {
-  color: #56B6C2;
-  font-size: 12px;
-  padding: 4px 8px;
-  background-color: #2D2D2D;
-  border-radius: 4px;
-}
-
-.project-tech {
-  color: #787C85;
-  font-size: 13px;
-}
-
-.contact-links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-left: 24px;
-}
-
-.contact-link {
-  text-decoration: none;
-  color: #56B6C2;
-  transition: all 0.3s ease;
-  display: inline-block;
-}
-
-.contact-link:hover {
-  color: #50FA7B;
-  transform: translateX(4px);
-}
-
-.path {
-  font-family: 'Fira Code', monospace;
-}
-
-.terminal-footer {
-  margin-top: 32px;
-  padding-top: 16px;
-  border-top: 1px solid #333;
-  display: flex;
-  align-items: center;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  body {
-    padding: 10px;
-  }
-
-  .terminal-container {
-    width: 100%;
-    height: 80vh;
-    max-height: 600px;
-  }
-
-  .terminal-window {
-    border-radius: 6px;
-  }
-
-  .terminal-body {
-    padding: 12px;
-    height: calc(100% - 44px);
-    font-size: 13px;
-  }
-
-  .terminal-header {
-    padding: 10px 12px;
-  }
-
-  .terminal-title {
-    font-size: 12px;
-  }
-
-  .developer-name {
-    font-size: 18px;
-  }
-
-  .developer-title {
-    font-size: 14px;
-    margin-left: 16px;
-  }
-
-  .developer-location,
-  .developer-status {
-    font-size: 12px;
-    margin-left: 16px;
-  }
-
-  .tech-grid {
-    margin-left: 16px;
-    gap: 8px;
-  }
-
-  .tech-item {
-    padding: 10px 12px;
-  }
-
-  .experience-list,
-  .projects-list {
-    margin-left: 16px;
-  }
-
-  .experience-item,
-  .project-item {
-    padding: 12px;
-  }
-
-  .greeting,
-  .section-title {
-    font-size: 13px;
-  }
-
-  .exp-header,
-  .project-header {
+/* ============================================
+   TERMINAL BODY
+   ============================================ */
+.terminal-body {
+    flex: 1;
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
-
-  .exp-role,
-  .project-name {
+    color: #c8d0dc;
     font-size: 14px;
-  }
+    line-height: 1.7;
+    overflow: hidden;
+    background: linear-gradient(180deg, #0d1117, #0a0e1a);
+    position: relative;
+}
 
-  .exp-period,
-  .project-status {
+/* ============================================
+   WELCOME SECTION - با طراحی هنری
+   ============================================ */
+.welcome-section {
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(51, 255, 51, 0.04);
+    flex-shrink: 0;
+    background: linear-gradient(180deg, rgba(13, 17, 23, 0.9), rgba(10, 14, 26, 0.6));
+    max-height: 220px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.welcome-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(51, 255, 51, 0.1), transparent);
+}
+
+.welcome-section::-webkit-scrollbar {
+    width: 3px;
+}
+
+.welcome-section::-webkit-scrollbar-thumb {
+    background: rgba(51, 255, 51, 0.2);
+    border-radius: 2px;
+}
+
+.welcome-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.welcome-icon {
+    font-size: 28px;
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-6px) rotate(5deg); }
+}
+
+.welcome-title {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #33ff33, #00d4ff, #33ff33);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleGradient 4s ease-in-out infinite;
+    letter-spacing: 3px;
+}
+
+@keyframes titleGradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.welcome-version {
+    color: rgba(136, 146, 176, 0.5);
+    font-size: 10px;
+    background: rgba(51, 255, 51, 0.05);
+    padding: 3px 14px;
+    border-radius: 20px;
+    margin-left: auto;
+    border: 1px solid rgba(51, 255, 51, 0.05);
+    letter-spacing: 1px;
+}
+
+.welcome-subtitle {
+    color: rgba(136, 146, 176, 0.6);
+    font-size: 13px;
+    padding-left: 6px;
+    margin-bottom: 6px;
+    border-left: 2px solid rgba(51, 255, 51, 0.2);
+    padding-left: 14px;
+}
+
+/* ============================================
+   DIVIDER - با طراحی
+   ============================================ */
+.divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(51, 255, 51, 0.06), transparent);
+    margin: 8px 0;
+}
+
+/* ============================================
+   SECTION LABEL - با استایل خاص
+   ============================================ */
+.section-label {
+    color: rgba(136, 146, 176, 0.4);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 6px 0 4px 0;
+    font-weight: 600;
+}
+
+/* ============================================
+   QUICK COMMANDS - با طراحی گرید
+   ============================================ */
+.quick-commands {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.quick-command {
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(51, 255, 51, 0.04);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.quick-command::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(51, 255, 51, 0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.quick-command:hover {
+    transform: translateX(6px) scale(1.02);
+    border-color: rgba(51, 255, 51, 0.15);
+    background: rgba(51, 255, 51, 0.03);
+    box-shadow: 0 4px 20px rgba(51, 255, 51, 0.05);
+}
+
+.quick-command:hover::before {
+    opacity: 1;
+}
+
+.quick-command .cmd-key {
+    color: #33ff33;
+    font-weight: 600;
     font-size: 11px;
-  }
+    text-shadow: 0 0 20px rgba(51, 255, 51, 0.1);
+}
 
-  .contact-links {
-    margin-left: 16px;
-  }
+.quick-command .cmd-desc {
+    color: rgba(136, 146, 176, 0.4);
+    font-size: 10px;
+}
+
+/* ============================================
+   FILES - با طراحی کارت
+   ============================================ */
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 12px;
+    margin: 2px 0;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.file-item:hover {
+    background: rgba(51, 255, 51, 0.03);
+    border-color: rgba(51, 255, 51, 0.08);
+    transform: translateX(6px);
+    box-shadow: 0 2px 20px rgba(51, 255, 51, 0.03);
+}
+
+.file-item .file-icon {
+    font-size: 14px;
+}
+
+.file-item .file-name {
+    color: #33ff33;
+    font-weight: 500;
+    font-size: 12px;
+    text-shadow: 0 0 20px rgba(51, 255, 51, 0.05);
+}
+
+.file-item .file-desc {
+    color: rgba(136, 146, 176, 0.3);
+    font-size: 10px;
+    margin-left: auto;
+}
+
+/* ============================================
+   TERMINAL OUTPUT - با فضای بیشتر
+   ============================================ */
+.terminal-output {
+    flex: 1;
+    padding: 12px 20px;
+    overflow-y: auto;
+    background: rgba(10, 14, 26, 0.3);
+    min-height: 100px;
+}
+
+.terminal-output::-webkit-scrollbar {
+    width: 4px;
+}
+
+.terminal-output::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.terminal-output::-webkit-scrollbar-thumb {
+    background: rgba(51, 255, 51, 0.15);
+    border-radius: 2px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb:hover {
+    background: rgba(51, 255, 51, 0.3);
+}
+
+/* ============================================
+   OUTPUT LINES - با انیمیشن
+   ============================================ */
+.output-line {
+    margin-bottom: 2px;
+    padding: 3px 0;
+    font-size: 13px;
+    line-height: 1.6;
+    animation: lineAppear 0.4s ease-out;
+}
+
+@keyframes lineAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.output-line.boot {
+    color: rgba(200, 208, 220, 0.5);
+    font-size: 12px;
+}
+
+.output-line.input {
+    color: #33ff33;
+    font-weight: 600;
+    text-shadow: 0 0 30px rgba(51, 255, 51, 0.05);
+}
+
+.output-line.output {
+    color: #c8d0dc;
+}
+
+.output-line.output pre {
+    margin: 4px 0;
+    white-space: pre-wrap;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #c8d0dc;
+}
+
+.output-line.error {
+    color: #ff6b6b;
+    font-weight: 600;
+    text-shadow: 0 0 30px rgba(255, 107, 107, 0.1);
+}
+
+.output-line.neofetch {
+    color: #33ff33;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.output-line.neofetch pre {
+    margin: 2px 0;
+    white-space: pre;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #33ff33;
+    text-shadow: 0 0 30px rgba(51, 255, 51, 0.05);
+}
+
+/* ============================================
+   INPUT LINE - با استایل خاص
+   ============================================ */
+.input-line {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-top: 1px solid rgba(51, 255, 51, 0.04);
+    background: rgba(10, 14, 26, 0.8);
+    flex-shrink: 0;
+    gap: 10px;
+    min-height: 44px;
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.input-line::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(51, 255, 51, 0.05), transparent);
+}
+
+.prompt {
+    color: #33ff33;
+    font-weight: 700;
+    font-size: 13px;
+    white-space: nowrap;
+    text-shadow: 0 0 30px rgba(51, 255, 51, 0.1);
+}
+
+.command-input {
+    background: transparent;
+    border: none;
+    color: #c8d0dc;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+    flex: 1;
+    outline: none;
+    caret-color: #33ff33;
+    padding: 2px 0;
+}
+
+.command-input::placeholder {
+    color: rgba(136, 146, 176, 0.15);
+}
+
+.cursor-blink {
+    display: inline-block;
+    width: 2px;
+    height: 18px;
+    background: #33ff33;
+    box-shadow: 0 0 20px rgba(51, 255, 51, 0.5);
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ============================================
+   STATUS BAR - با طراحی مینیمال
+   ============================================ */
+.terminal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 20px;
+    background: rgba(13, 17, 23, 0.9);
+    border-top: 1px solid rgba(51, 255, 51, 0.03);
+    flex-shrink: 0;
+    min-height: 30px;
+    font-size: 10px;
+    color: rgba(136, 146, 176, 0.3);
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+.terminal-footer .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.terminal-footer .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.terminal-footer .status-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.terminal-footer .status-dot-small {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.terminal-footer .status-dot-small.green {
+    background: #33ff33;
+    box-shadow: 0 0 10px rgba(51, 255, 51, 0.3);
+}
+
+.terminal-footer .key-hint {
+    color: rgba(136, 146, 176, 0.15);
+    font-size: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.terminal-footer .key-hint kbd {
+    color: rgba(51, 255, 51, 0.3);
+    font-weight: 600;
+}
+
+/* ============================================
+   HIRE BUTTON - با طراحی خاص
+   ============================================ */
+.hire-button {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #33ff33, #00d4ff);
+    color: #0a0e1a;
+    border: none;
+    border-radius: 50px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 0 40px rgba(51, 255, 51, 0.1);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hire-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg) translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.hire-button:hover::before {
+    transform: rotate(45deg) translateX(100%);
+}
+
+.hire-button:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 60px rgba(51, 255, 51, 0.2);
+}
+
+/* ============================================
+   CRT OVERLAY - با افکت خلاقانه
+   ============================================ */
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.4) 100%),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.01) 2px,
+            rgba(0, 0, 0, 0.01) 4px
+        );
+    z-index: 2;
+    pointer-events: none;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.02),
+        rgba(0, 0, 0, 0.02) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    z-index: 3;
+    pointer-events: none;
+    animation: scanMove 8s linear infinite;
+}
+
+@keyframes scanMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100%; }
+}
+
+/* ============================================
+   BACKGROUND - با طراحی هنری
+   ============================================ */
+.animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(51, 255, 51, 0.02) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(0, 212, 255, 0.02) 0%, transparent 50%),
+        radial-gradient(ellipse at center, #0a0e1a 0%, #05080f 100%);
+}
+
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: radial-gradient(circle, #33ff33, transparent);
+    border-radius: 50%;
+    opacity: 0.15;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    body { padding: 12px; }
+    
+    .terminal-container {
+        width: 100%;
+        height: 92vh;
+        max-height: none;
+    }
+    
+    .terminal-window {
+        border-radius: 12px;
+    }
+    
+    .terminal-header {
+        padding: 8px 14px;
+        min-height: 36px;
+    }
+    
+    .terminal-title {
+        font-size: 10px;
+        margin-left: 12px;
+        margin-right: 50px;
+    }
+    
+    .terminal-button {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .welcome-section {
+        padding: 14px 16px;
+        max-height: 180px;
+    }
+    
+    .welcome-title {
+        font-size: 16px;
+    }
+    
+    .welcome-subtitle {
+        font-size: 11px;
+    }
+    
+    .quick-commands {
+        grid-template-columns: 1fr 1fr;
+        gap: 3px;
+    }
+    
+    .quick-command {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+    
+    .quick-command .cmd-key {
+        font-size: 9px;
+    }
+    
+    .quick-command .cmd-desc {
+        font-size: 8px;
+    }
+    
+    .file-item {
+        padding: 3px 8px;
+        font-size: 10px;
+    }
+    
+    .file-item .file-name {
+        font-size: 10px;
+    }
+    
+    .file-item .file-desc {
+        font-size: 9px;
+    }
+    
+    .terminal-output {
+        padding: 8px 14px;
+        min-height: 60px;
+    }
+    
+    .output-line {
+        font-size: 11px;
+    }
+    
+    .output-line.output pre {
+        font-size: 10px;
+    }
+    
+    .output-line.neofetch pre {
+        font-size: 9px;
+    }
+    
+    .input-line {
+        padding: 6px 14px;
+        min-height: 36px;
+    }
+    
+    .prompt {
+        font-size: 11px;
+    }
+    
+    .command-input {
+        font-size: 11px;
+    }
+    
+    .terminal-footer {
+        padding: 2px 14px;
+        min-height: 24px;
+        font-size: 9px;
+    }
+    
+    .terminal-footer .footer-left {
+        gap: 10px;
+    }
+    
+    .terminal-footer .footer-right {
+        gap: 10px;
+    }
+    
+    .terminal-footer .key-hint {
+        font-size: 7px;
+        padding: 0px 6px;
+    }
+    
+    .hire-button {
+        padding: 10px 22px;
+        font-size: 11px;
+        bottom: 18px;
+        right: 18px;
+    }
 }
 
 @media (max-width: 480px) {
-  .terminal-container {
-    height: 85vh;
-  }
-
-  .terminal-body {
-    padding: 10px;
-    font-size: 12px;
-  }
-
-  .developer-name {
-    font-size: 16px;
-  }
-
-  .developer-title {
-    font-size: 13px;
-  }
-
-  .tech-item {
-    padding: 8px 10px;
-  }
-
-  .experience-item,
-  .project-item {
-    padding: 10px;
-  }
-
-  .hire-button {
-    bottom: 20px;
-    right: 20px;
-    padding: 12px 24px;
-    font-size: 14px;
-  }
-}
-
-/* Scrollbar Styling */
-.terminal-body::-webkit-scrollbar {
-  width: 8px;
-}
-
-.terminal-body::-webkit-scrollbar-track {
-  background: #1E1E1E;
-}
-
-.terminal-body::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
-}
-
-.terminal-body::-webkit-scrollbar-thumb:hover {
-  background: #50FA7B;
+    .quick-commands {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .terminal-container {
+        height: 95vh;
+    }
+    
+    .welcome-section {
+        max-height: 140px;
+        padding: 10px 12px;
+    }
+    
+    .welcome-title {
+        font-size: 13px;
+    }
+    
+    .welcome-icon {
+        font-size: 20px;
+    }
+    
+    .terminal-output {
+        padding: 6px 10px;
+        min-height: 40px;
+    }
+    
+    .output-line {
+        font-size: 10px;
+    }
+    
+    .output-line.output pre {
+        font-size: 9px;
+    }
+    
+    .input-line {
+        padding: 4px 10px;
+        min-height: 30px;
+    }
+    
+    .prompt {
+        font-size: 10px;
+    }
+    
+    .command-input {
+        font-size: 10px;
+    }
+    
+    .terminal-footer {
+        padding: 1px 10px;
+        min-height: 20px;
+        font-size: 8px;
+        flex-wrap: wrap;
+    }
+    
+    .terminal-footer .footer-left {
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+    
+    .terminal-footer .footer-right {
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+    
+    .file-item .file-desc {
+        display: none;
+    }
+    
+    .quick-command .cmd-desc {
+        display: none;
+    }
+    
+    .hire-button {
+        padding: 8px 16px;
+        font-size: 10px;
+        bottom: 12px;
+        right: 12px;
+    }
 }
